@@ -1,0 +1,25 @@
+Python artifacts
+
+pycache/
+*.pyc
+
+Data Directories
+
+忽略所有下载和处理后的数据
+
+/data/
+
+Report Files
+
+忽略所有生成的分析报告
+
+*.csv
+*.parquet
+duplicates_report.csv
+gap_report.csv
+data_quality_report.csv
+
+IDE specific files
+
+.vscode/
+.idea/
