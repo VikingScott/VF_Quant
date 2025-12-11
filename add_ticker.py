@@ -4,10 +4,13 @@ import pandas_datareader.data as web
 import os
 import sys
 import datetime
+from catalog_loader import load_all_catalogs
 
 # ================= 配置区 =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
+DATA_IMPORT_DIR = os.path.join(BASE_DIR, 'data_import')
+# 默认保存到 master_catalog.csv（在 data_import 文件夹中）
+CATALOG_PATH = os.path.join(DATA_IMPORT_DIR, 'master_catalog.csv')
 
 # ================= 智能推断逻辑 =================
 

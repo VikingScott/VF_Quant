@@ -5,6 +5,7 @@ import os
 import datetime
 import time
 import warnings
+from catalog_loader import load_all_catalogs
 
 # 忽略一些 Pandas 的 Future Warnings，保持控制台清爽
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -13,7 +14,6 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # 获取当前脚本所在的绝对路径，确保相对路径不出错
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'daily_csv') # 数据存放在 yfdata/data/daily_csv
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 
@@ -24,9 +24,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 # ================= 辅助函数 =================
 
 def load_catalog():
-    if not os.path.exists(CATALOG_PATH):
-        raise FileNotFoundError(f"找不到资产清单，请检查路径: {CATALOG_PATH}")
-    return pd.read_csv(CATALOG_PATH)
+    return load_all_catalogs()
 
 def get_last_date_from_csv(file_path):
     """

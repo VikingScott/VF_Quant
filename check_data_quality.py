@@ -3,11 +3,11 @@ import numpy as np
 import os
 import glob
 from datetime import datetime, timedelta
+from catalog_loader import load_all_catalogs
 
 # ================= 配置区 =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'daily_csv')
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
 
 def analyze_file(file_path):
     """

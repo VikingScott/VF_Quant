@@ -3,11 +3,11 @@ import numpy as np
 import os
 import glob
 import sys
+from catalog_loader import load_all_catalogs
 
 # ================= 配置 =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'daily_csv')
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
 
 # 阈值设置
 CORR_THRESHOLD_STRICT = 0.995 # 极高相关性，几乎肯定是重复，直接杀
@@ -25,11 +25,11 @@ def load_active_universe():
     只读取 master_catalog 中 is_active=1 的资产
     返回: dict {ticker: description} 用于白名单检查
     """
-    if not os.path.exists(CATALOG_PATH):
-        print("错误: 找不到 master_catalog.csv")
+    try:
+        df = load_all_catalogs()
+    except Exception as e:
+        print(f"错误: 加载目录失败 - {e}")
         sys.exit(1)
-        
-    df = pd.read_csv(CATALOG_PATH)
     
     # 核心逻辑：只取活跃资产
     active_df = df[df['is_active'] == 1].copy()

@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import datetime
+from catalog_loader import load_all_catalogs
 try:
     import holidays
 except ImportError:
@@ -10,7 +11,6 @@ except ImportError:
 # ================= 配置区 =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'daily_csv')
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
 REPORT_PATH = os.path.join(BASE_DIR, 'gap_report.csv')
 
 def load_catalog_map():
@@ -18,11 +18,12 @@ def load_catalog_map():
     加载资产目录，返回一个字典: {ticker: {'asset_class': ..., 'region': ...}}
     这样我们可以快速查表。
     """
-    if not os.path.exists(CATALOG_PATH):
-        print("警告: 找不到 master_catalog.csv，将默认所有资产都使用 NYSE 规则。")
+    try:
+        df = load_all_catalogs()
+    except Exception as e:
+        print(f"警告: 加载目录失败 ({e})，将默认所有资产都使用 NYSE 规则。")
         return {}
     
-    df = pd.read_csv(CATALOG_PATH)
     # 建立映射字典
     mapping = {}
     for _, row in df.iterrows():

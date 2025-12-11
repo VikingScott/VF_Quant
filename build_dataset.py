@@ -1,20 +1,17 @@
 import pandas as pd
 import os
 import sys
+from catalog_loader import load_all_catalogs
 
 # ================= 配置 =================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'daily_csv')
-CATALOG_PATH = os.path.join(BASE_DIR, 'master_catalog.csv')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def load_catalog():
-    if not os.path.exists(CATALOG_PATH):
-        print("错误: 找不到 master_catalog.csv")
-        sys.exit(1)
-    return pd.read_csv(CATALOG_PATH)
+    return load_all_catalogs()
 
 def build_matrix(ticker_list, value_col_priority=['adj_close', 'close']):
     """

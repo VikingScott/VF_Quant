@@ -15,9 +15,6 @@ Report Files
 
 *.csv
 *.parquet
-duplicates_report.csv
-gap_report.csv
-data_quality_report.csv
 
 IDE specific files
 
